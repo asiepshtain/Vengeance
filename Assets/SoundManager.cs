@@ -61,7 +61,7 @@ public class SoundManager : MonoBehaviour {
         }
         else
         {
-            tracks[level + "b"].Stop();
+            tracks[level + "b"].Stop();//test
             tracks[level + "g"].Stop();
 
             side = GameManager.Sides.Blue;
