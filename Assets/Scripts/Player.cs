@@ -16,7 +16,8 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     private List<Vector3> Playback = new List<Vector3>();
-    
+
+    private bool alive = true;
 
     public bool Flip;
     private float recordStep = 0.016f;
@@ -136,6 +137,9 @@ public class Player : MonoBehaviour {
 
     public void fireProjectile()
     {
+        if (!alive)
+            return;
+
         Debug.Log("FIRE");
 
         Transform bullet;
@@ -157,6 +161,8 @@ public class Player : MonoBehaviour {
 
     public void killAnim()
     {
+        alive = false;
+
         ParticleSystem p = GetComponentInChildren<ParticleSystem>();
         p.Play();
         GetComponent<SpriteRenderer>().enabled = false;

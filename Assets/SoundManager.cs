@@ -51,9 +51,7 @@ public class SoundManager : MonoBehaviour {
 
     public void levelup()
     {
-        if (level == 6)
-            return;
-                
+                       
         if (side == GameManager.Sides.Blue)
         {
             side = GameManager.Sides.Green;
@@ -65,7 +63,10 @@ public class SoundManager : MonoBehaviour {
             tracks[level + "g"].Stop();
 
             side = GameManager.Sides.Blue;
-            level++;
+
+            if ( level < 5)
+                level++;
+
             playMusic(level, side);
         }
     }
