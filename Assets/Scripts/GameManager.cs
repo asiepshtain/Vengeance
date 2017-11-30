@@ -87,11 +87,11 @@ public class GameManager : MonoBehaviour
         if (resetPending)
             return;
 
-        Debug.Log("HIT CHAR: " + p.ToString());
+        //Debug.Log("HIT CHAR: " + p.ToString());
         if (p == ActivePlayer)
         {
             sndManager.playDead();
-            Debug.Log("DEAD");
+          //  Debug.Log("DEAD");
             p.killAnim();
             Invoke("resetLevel", 1);
             resetPending = true;
@@ -100,18 +100,21 @@ public class GameManager : MonoBehaviour
         else if ( Enemies.IndexOf(p) != -1  )
         {
             sndManager.playKill();
-            Debug.Log("Killed enemy");
+            //Debug.Log("Killed enemy");
             p.StopAllCoroutines();
             Enemies.Remove(p);
             p.killAnim();
             if (Enemies.Count == 0)
+            {
+                resetPending = true;
                 Invoke("EndCurrentLevel", 0.6f);
+            }
             
         }
         else if (Friends.IndexOf(p) != -1 )
         {
             sndManager.playKill();
-            Debug.Log("friend died");
+            //Debug.Log("friend died");
             p.StopAllCoroutines();
             Friends.Remove(p);
             p.killAnim();
@@ -155,7 +158,9 @@ public class GameManager : MonoBehaviour
 
     void EndCurrentLevel()
     {
-        Debug.Log("end current level");
+        resetPending = false;
+
+        //Debug.Log("end current level");
         foreach ( Player p in Friends)
         {
             p.StopAllCoroutines();
@@ -233,7 +238,7 @@ public class GameManager : MonoBehaviour
     void StartNextLevel()
     {
         
-        Debug.Log("start next level");
+        //Debug.Log("start next level");
         level++;
 
         
@@ -349,6 +354,10 @@ public class GameManager : MonoBehaviour
     	// Update is called once per frame
 	void Update () {
     
+        if ( Input.GetKeyUp(KeyCode.P))
+        {
+            Pause();
+        }
     }
 
   

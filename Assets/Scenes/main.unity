@@ -875,7 +875,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1.02
+  m_Text: '1.0.4
+
 
 '
 --- !u!222 &387819764
@@ -3039,7 +3040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1595578928
 RectTransform:
   m_ObjectHideFlags: 0
