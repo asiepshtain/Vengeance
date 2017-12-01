@@ -14,17 +14,18 @@ public class GameManager : MonoBehaviour
     public List<List<Vector3>> recordings;
     public enum Sides { Green, Blue };
     private Sides CurrentSide;
-    public bool AllowForgivness = false;
+    //public bool AllowForgivness = false;
     public List<Player> Enemies;
     public List<Player> Friends;
     public List<GameObject> projectiles;
     public Player ActivePlayer;
-    private List<Vector3> greenGraves;
-    private List<Vector3> blueGraves;
+    
+    //private List<Vector3> greenGraves;
+    //private List<Vector3> blueGraves;
 
     private bool resetPending = false;
     private int deathCounter = 0;
-    private bool forgivness = true;
+    private bool forgivness = false;
     private bool hugmovment = false;
     private bool gameover = false;
 
