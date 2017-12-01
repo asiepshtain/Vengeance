@@ -8,7 +8,8 @@ public class hugzone : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        gm.HugZoneEnter();
+        if ( other.tag != "Projectile")
+            gm.HugZoneEnter();
 
     }
 

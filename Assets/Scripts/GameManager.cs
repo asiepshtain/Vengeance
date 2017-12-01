@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ForgivenessCount()
     {
-        /*
+     
         yield return new WaitForSeconds(5);
 
         ForgiveOne.SetActive(true);
@@ -273,7 +273,7 @@ public class GameManager : MonoBehaviour
 
         ForgiveTwo.SetActive(false);
 
-          */
+     
         yield return new WaitForSeconds(3);
         
         hugmovment = true;
@@ -294,7 +294,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        ActivePlayer.transform.position = new Vector3(0, -0.6f, 0);
+        ActivePlayer.transform.position = new Vector3(0, -0.45f, 0);
         Enemies[0].transform.position = new Vector3(0, 0.4f, 0);
 
         float a = 0f;
