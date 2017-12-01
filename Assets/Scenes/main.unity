@@ -555,6 +555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shooter: {fileID: 1266392600}
   boss: {fileID: 968271120}
+  sound: {fileID: 1098206767}
 --- !u!95 &300679817
 Animator:
   serializedVersion: 3
@@ -875,7 +876,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1.0.4
+  m_Text: '1.0.5
+
 
 
 '

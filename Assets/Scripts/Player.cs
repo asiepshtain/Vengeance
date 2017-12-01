@@ -30,6 +30,8 @@ public class Player : MonoBehaviour {
     public event ShotReport ShotDetected;
     public delegate void ShotReport(GameObject p);
 
+    public Material alternateParticleMat;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -96,10 +98,7 @@ public class Player : MonoBehaviour {
             this.transform.Rotate(0, 0, 180);
             
         }
-        else
-        {
-           
-        }
+
 
 
         bool PlayFwd = true;
@@ -127,7 +126,7 @@ public class Player : MonoBehaviour {
                 if (playbackIndex == 0)
                     PlayFwd = true;
             }
-
+            
             yield return new WaitForSeconds(recordStep);
             recordStep = 0.016f;
         }
@@ -140,7 +139,7 @@ public class Player : MonoBehaviour {
         if (!alive)
             return;
 
-        Debug.Log("FIRE");
+        //Debug.Log("FIRE");
 
         Transform bullet;
 
@@ -162,9 +161,14 @@ public class Player : MonoBehaviour {
     public void killAnim()
     {
         alive = false;
-
+       
         ParticleSystem p = GetComponentInChildren<ParticleSystem>();
+
+        if (this.gameObject.layer == 9)
+            p.GetComponent<Renderer>().material = alternateParticleMat;
+        
         p.Play();
+
         GetComponent<SpriteRenderer>().enabled = false;
 
         Destroy(GetComponent<Collider2D>());
@@ -178,7 +182,7 @@ public class Player : MonoBehaviour {
      
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("COLLIDE");
+        //Debug.Log("COLLIDE");
         Destroy(other.gameObject);
 
         if (HitDetected != null )

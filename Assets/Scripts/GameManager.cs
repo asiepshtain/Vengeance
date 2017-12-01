@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
         resetPending = false;
 
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        level = 0;
+        
         recordings = new List<List<Vector3>>();
         CurrentSide = Sides.Blue;
 
@@ -180,6 +180,8 @@ public class GameManager : MonoBehaviour
 
     public void StartPlay()
     {
+        level = 0;
+
         BlueText.SetActive(false);
 
         Enemies = new List<Player>();
@@ -279,7 +281,12 @@ public class GameManager : MonoBehaviour
 
         Player P = Instantiate(Player, transform.parent);
         
-        P.transform.position = new Vector2( Random.Range(-6f,6f) , Random.Range(-2f,-5f));
+        if ( level != 1 )
+            P.transform.position = new Vector2( Random.Range(-8f,8f) , Random.Range(-3f,-5f));
+        else
+            P.transform.position = new Vector2(0,-4);
+
+
         //P.interactive = true;
         P.startRecording();
         P.HitDetected += new Player.HitReport(CharacterHitHandler);
