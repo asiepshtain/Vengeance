@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     private int deathCounter = 0;
     private bool forgivness = true;
     private bool hugmovment = false;
-    private bool gameover = true;
+    private bool gameover = false;
 
 
     /// <summary>
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public GameObject ForgiveTwo;
     public SoundManager sndManager;
     public GameObject[] DeathTexts;
-    
+    public GameObject endText;
 
   
 
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         {
             ActivePlayer.stopRecording();
             ActivePlayer.interactive = false;
-            ActivePlayer.GetComponent<Transform>().position = Vector3.Lerp( ActivePlayer.GetComponent<Transform>().position, new Vector3(0, -0.6f, 0), 0.04f);
+            ActivePlayer.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
             gameover = true;
         }
@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
         {
             //forgivness = false;
             hugmovment = false;
+            gameover = false;
             ForgiveOne.SetActive(false);
             ForgiveTwo.SetActive(false);
             StopCoroutine("ForgivenessCount");
@@ -255,7 +256,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ForgivenessCount()
     {
-
+        /*
         yield return new WaitForSeconds(5);
 
         ForgiveOne.SetActive(true);
@@ -272,9 +273,40 @@ public class GameManager : MonoBehaviour
 
         ForgiveTwo.SetActive(false);
 
+          */
         yield return new WaitForSeconds(3);
+        
+        hugmovment = true;
 
-            hugmovment = true;
+        
+        bool check = true;
+        while (check)
+        {
+            if ( gameover)
+            {
+
+                ActivePlayer.GetComponent<Transform>().position = Vector3.Lerp( ActivePlayer.GetComponent<Transform>().position, new Vector3(0f, -0.45f, 0), 0.02f);
+            }
+
+            if (ActivePlayer.transform.position.x > -0.3 && ActivePlayer.transform.position.x < 0.3 && ActivePlayer.transform.position.y > -0.48)
+                check = false;
+                
+            yield return new WaitForEndOfFrame();
+        }
+
+        ActivePlayer.transform.position = new Vector3(0, -0.6f, 0);
+        Enemies[0].transform.position = new Vector3(0, 0.4f, 0);
+
+        float a = 0f;
+        endText.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, a);
+
+        while (true)
+        {
+            endText.SetActive(true);
+            endText.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, a);// BlueEcho;
+            a += 0.01f;
+            yield return new WaitForEndOfFrame();
+        }
 
     }
 
@@ -429,6 +461,7 @@ public class GameManager : MonoBehaviour
             Enemies[0].GetComponent<Transform>().position = Vector3.Lerp(Enemies[0].GetComponent<Transform>().position, new Vector3(0, 0.4f, 0), 0.02f);
         }
 
+       
     }
 
   
