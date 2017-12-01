@@ -144,6 +144,9 @@ MonoBehaviour:
     type: 2}
   ProjectileGreen: {fileID: 1764814907824386, guid: 87bcd36b6cc37be41a7a354d292de5d6,
     type: 2}
+  Flip: 0
+  alternateParticleMat: {fileID: 2100000, guid: f1c111634542c554f81afc492cb0ba3c,
+    type: 2}
 --- !u!198 &198425588415478824
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     void CharacterShotHandler(GameObject shot)
     {
-        //projectiles.Add(shot);
+        projectiles.Add(shot);
         sndManager.playShot();
     }
 
@@ -193,6 +193,7 @@ public class GameManager : MonoBehaviour
         B.transform.position = new Vector2(-4, -4);
         B.interactive = true;
         B.startRecording(true);
+        
         B.gameObject.layer = 8;
         
         B.ShotDetected += new Player.ShotReport(CharacterShotHandler);
@@ -239,7 +240,10 @@ public class GameManager : MonoBehaviour
 
     void StartNextLevel()
     {
-        
+        foreach ( GameObject g in projectiles )
+        {
+            Destroy(g);
+        }
         //Debug.Log("start next level");
         level++;
 
@@ -360,11 +364,14 @@ public class GameManager : MonoBehaviour
 
     	// Update is called once per frame
 	void Update () {
-    
+
+       
         if ( Input.GetKeyUp(KeyCode.P))
         {
             Pause();
         }
+
+
     }
 
   
