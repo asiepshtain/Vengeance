@@ -182,11 +182,14 @@ public class Player : MonoBehaviour {
      
     void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("COLLIDE");
-        Destroy(other.gameObject);
+        if (other.name != "forgivness")
+        {
+            Destroy(other.gameObject);
 
-        if (HitDetected != null )
-            HitDetected(this);
+            if (HitDetected != null)
+                HitDetected(this);
+        }        
+        
     }
 
     // Update is called once per frame

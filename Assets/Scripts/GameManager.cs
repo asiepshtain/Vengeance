@@ -19,6 +19,14 @@ public class GameManager : MonoBehaviour
     public List<Player> Friends;
     public List<GameObject> projectiles;
     public Player ActivePlayer;
+    private List<Vector3> greenGraves;
+    private List<Vector3> blueGraves;
+
+    private bool resetPending = false;
+    private int deathCounter = 0;
+    private bool forgivness = true;
+    private bool hugmovment = false;
+    private bool gameover = true;
 
 
     /// <summary>
@@ -39,10 +47,10 @@ public class GameManager : MonoBehaviour
     public GameObject ForgiveOne;
     public GameObject ForgiveTwo;
     public SoundManager sndManager;
-
+    public GameObject[] DeathTexts;
     
-    private bool resetPending = false;
 
+  
 
     // Use this for initialization
     void Start()
@@ -73,14 +81,29 @@ public class GameManager : MonoBehaviour
         sndManager.playShot();
     }
 
+
+    public void HugZoneEnter()
+    {
+        if (hugmovment)
+        {
+            ActivePlayer.stopRecording();
+            ActivePlayer.interactive = false;
+            ActivePlayer.GetComponent<Transform>().position = Vector3.Lerp( ActivePlayer.GetComponent<Transform>().position, new Vector3(0, -0.6f, 0), 0.04f);
+
+            gameover = true;
+        }
+
+    }
+
     void CharacterHitHandler(Player p)
     {
-        if (AllowForgivness)
+        if (forgivness)
         {
-            AllowForgivness = false;
+            //forgivness = false;
+            hugmovment = false;
             ForgiveOne.SetActive(false);
             ForgiveTwo.SetActive(false);
-            StopCoroutine("Forgiveness");
+            StopCoroutine("ForgivenessCount");
         }
 
 
@@ -95,7 +118,7 @@ public class GameManager : MonoBehaviour
             p.killAnim();
             Invoke("resetLevel", 1);
             resetPending = true;
-            AllowForgivness = true;
+            
         }
         else if ( Enemies.IndexOf(p) != -1  )
         {
@@ -129,8 +152,16 @@ public class GameManager : MonoBehaviour
 
         if (CurrentSide == Sides.Green)
             background.GetComponent<Animator>().SetTrigger("flip");
-        
-        BlueText.SetActive(true);
+
+
+
+        //BlueText.SetActive(true);
+               
+        DeathTexts[deathCounter % DeathTexts.Length].SetActive(true);
+        deathCounter++;
+
+        if (deathCounter > 5)
+            forgivness = true;
 
         resetPending = false;
 
@@ -181,6 +212,11 @@ public class GameManager : MonoBehaviour
     public void StartPlay()
     {
         level = 0;
+        
+        foreach ( GameObject g in DeathTexts)
+        {
+            g.SetActive(false);
+        }
 
         BlueText.SetActive(false);
 
@@ -213,14 +249,14 @@ public class GameManager : MonoBehaviour
         Enemies.Add(G);
         ActivePlayer = B;
 
-        if (AllowForgivness)
-            StartCoroutine("Forgiveness");
+        if (forgivness)
+            StartCoroutine("ForgivenessCount");
     }
 
-    public IEnumerator Forgiveness()
+    public IEnumerator ForgivenessCount()
     {
 
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(5);
 
         ForgiveOne.SetActive(true);
 
@@ -228,13 +264,17 @@ public class GameManager : MonoBehaviour
 
         ForgiveOne.SetActive(false);
 
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(3);
 
         ForgiveTwo.SetActive(true);
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
 
         ForgiveTwo.SetActive(false);
+
+        yield return new WaitForSeconds(3);
+
+            hugmovment = true;
 
     }
 
@@ -247,6 +287,14 @@ public class GameManager : MonoBehaviour
         //Debug.Log("start next level");
         level++;
 
+        Debug.Log(level);
+
+        if (level > 8)
+        {
+            
+            Debug.Log("forgive");
+            forgivness = true;
+        }
         
         if (CurrentSide == Sides.Blue)
         {
@@ -371,6 +419,15 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
+        if ( Input.GetKeyUp(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        if ( hugmovment )
+        {
+            Enemies[0].GetComponent<Transform>().position = Vector3.Lerp(Enemies[0].GetComponent<Transform>().position, new Vector3(0, 0.4f, 0), 0.02f);
+        }
 
     }
 
