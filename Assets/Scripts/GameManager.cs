@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
         DeathTexts[deathCounter % DeathTexts.Length].SetActive(true);
         deathCounter++;
 
-        if (deathCounter > 3)
+        if (deathCounter >= 3)
             forgivness = true;
 
         resetPending = false;
